@@ -11,6 +11,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 public class Cachorro extends PanacheEntityBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(readOnly = true)
@@ -27,12 +28,12 @@ public class Cachorro extends PanacheEntityBase {
     @Size(max = 80)
     public String localDeResgate;
 
-    // One-to-One: um cachorro tem uma ficha detalhada
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    // Agora LAZY + JsonIgnore (corrige o loop e o erro 500)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "ficha_cachorro_id")
+    @JsonIgnore
     public FichaCachorro ficha;
 
-    // One-to-Many: um cachorro pode ter várias solicitações de adoção
     @OneToMany(mappedBy = "cachorro", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     public List<Adocao> adocoes = new ArrayList<>();

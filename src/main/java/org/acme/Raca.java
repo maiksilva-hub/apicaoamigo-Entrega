@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 public class Raca extends PanacheEntityBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -20,7 +21,6 @@ public class Raca extends PanacheEntityBase {
     @Size(max = 200, message = "A descrição não pode ultrapassar 200 caracteres")
     public String descricao;
 
-    // Many-to-Many inverso: várias raças podem estar associadas a várias adoções
     @ManyToMany(mappedBy = "racas", fetch = FetchType.LAZY)
     @JsonIgnore
     public Set<Adocao> adocoes = new HashSet<>();

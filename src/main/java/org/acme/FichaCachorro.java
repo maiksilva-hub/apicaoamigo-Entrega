@@ -1,6 +1,5 @@
 package org.acme;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -8,6 +7,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 public class FichaCachorro extends PanacheEntityBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(readOnly = true)
@@ -21,11 +21,6 @@ public class FichaCachorro extends PanacheEntityBase {
     public String temperamentoPrincipal;
 
     public String habilidadesEspeciais;
-
-    // One-to-One: uma ficha pertence a um cachorro
-    @OneToOne(mappedBy = "ficha", fetch = FetchType.LAZY)
-    @JsonIgnore
-    public Cachorro cachorro;
 
     public FichaCachorro() {}
 

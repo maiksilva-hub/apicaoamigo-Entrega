@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 public class Adocao extends PanacheEntityBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -22,14 +23,12 @@ public class Adocao extends PanacheEntityBase {
 
     @NotBlank(message = "O status da adoção é obrigatório")
     @Size(max = 50)
-    public String status; // Ex: Pendente, Aprovada, Rejeitada
+    public String status;
 
-    // Many-to-One: várias adoções para um cachorro
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cachorro_id")
     public Cachorro cachorro;
 
-    // Many-to-Many: uma adoção pode envolver várias raças (se o cão for SRD)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "adocao_raca",
